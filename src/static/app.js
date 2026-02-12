@@ -10,6 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch("/activities");
       const activities = await response.json();
 
+      // Activity icons mapping
+      const activityIcons = {
+        "Soccer Team": "⚽",
+        "Swimming Club": "🏊",
+        "Drama Club": "🎭",
+        "Art Studio": "🎨",
+        "Debate Team": "💬",
+        "Science Olympiad": "🔬",
+        "Chess Club": "♟️",
+        "Programming Class": "💻",
+        "Gym Class": "🏋️"
+      };
+
       // Clear loading message
       activitiesList.innerHTML = "";
 
@@ -19,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         activityCard.className = "activity-card";
 
         const spotsLeft = details.max_participants - details.participants.length;
+        const icon = activityIcons[name] || "🎯";
 
         // Create participants list
         const participantsList = details.participants.length > 0
@@ -31,12 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
           : `<p class="no-participants">No participants yet. Be the first to sign up!</p>`;
 
         activityCard.innerHTML = `
-          <h4>${name}</h4>
+          <h4>${icon} ${name}</h4>
           <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>📅 Schedule:</strong> ${details.schedule}</p>
+          <p><strong>👥 Availability:</strong> ${spotsLeft} spots left</p>
           <div class="participants-section">
-            <p><strong>Participants:</strong></p>
+            <p><strong>✅ Participants:</strong></p>
             ${participantsList}
           </div>
         `;
